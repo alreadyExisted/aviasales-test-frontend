@@ -1,0 +1,32 @@
+.switcherContainer {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.switchButton {
+  width: 50%;
+  background: #fff;
+  padding: 15px;
+  line-height: 20px;
+  border: 1px solid #dfe5ec;
+  outline: none;
+  text-transform: uppercase;
+  color: #4a4a4a;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+.first {
+  border-radius: 5px 0 0 5px;
+}
+
+.last {
+  border-radius: 0 5px 5px 0;
+}
+
+.active {
+  background: #2196f3;
+  color: #fff;
+}
