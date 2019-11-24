@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { filterTickets } from 'utils/helpers'
 import { TicketItem } from 'components/ticket-item'
 import { startSeach } from 'store/actions/ticket'
+import { RootStore, Ticket } from 'store'
 
 export const TicketContainer = () => {
-  const stops = useSelector(state => state.filters.stops)
-  const sorting = useSelector(state => state.filters.sorting)
-  const tickets = useSelector(state => state.tickets.tickets)
+  const stops = useSelector((state: RootStore) => state.filter.stops)
+  const sorting = useSelector((state: RootStore) => state.filter.sorting)
+  const tickets = useSelector((state: RootStore) => state.ticket.tickets)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(startSeach())
@@ -16,9 +17,10 @@ export const TicketContainer = () => {
     () => filterTickets(stops, sorting, tickets),
     [stops, sorting, tickets]
   )
+  
   return (
     <>
-      {filteredTickets.map((ticket, index) => (
+      {filteredTickets.map((ticket: Ticket, index: number) => (
         <TicketItem key={index} ticket={ticket} />
       ))}
     </>

@@ -5,15 +5,17 @@ import {
   START_FETCHING,
   SUCCESS_FETCHING
 } from '../action-types/ticket'
+import { AnyAction } from 'redux'
+import { TicketStore } from 'store'
 
-const initialState = {
+const initialState: TicketStore = {
   searchId: '',
   tickets: [],
   isLoading: false,
   error: false
 }
 
-export const ticketsReducer = (state = initialState, action) => {
+export const ticketsReducer = (state = initialState, action: AnyAction): TicketStore  => {
   switch (action.type) {
     case START_FETCHING:
       return {

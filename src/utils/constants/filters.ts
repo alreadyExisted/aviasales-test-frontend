@@ -1,4 +1,9 @@
-export const avaibleFilters = [
+interface Filter {
+  title: string
+  value: number
+}
+
+export const avaibleFilters: Filter[] = [
   {
     title: 'Без пересадок',
     value: 0

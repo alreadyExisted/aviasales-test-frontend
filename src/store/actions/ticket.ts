@@ -1,4 +1,4 @@
-import { store } from 'store'
+import { store, Ticket, RootStore } from 'store'
 import { getSearchId, getTickets } from 'api'
 import {
   FAIL_FETCHING,
@@ -7,23 +7,29 @@ import {
   START_FETCHING,
   SUCCESS_FETCHING
 } from 'store/action-types/ticket'
+import { AnyAction } from 'redux'
+import { ThunkDispatch } from 'redux-thunk'
 
-const startFetching = () => ({
+const startFetching = (): AnyAction => ({
   type: START_FETCHING
 })
 
-const failFetching = () => ({
+const failFetching = (): AnyAction => ({
   type: FAIL_FETCHING
 })
 
-const successFetching = () => ({
+const successFetching = (): AnyAction => ({
   type: SUCCESS_FETCHING
 })
 
-export const startSeach = () => async dispatch => {
+export const startSeach = () => async (
+  dispatch: ThunkDispatch<RootStore, undefined, AnyAction>
+) => {
   dispatch(startFetching())
   try {
-    const { searchId } = await getSearchId()
+    const {
+      data: { searchId }
+    } = await getSearchId()
     await dispatch(setSearchId(searchId))
     await dispatch(startFechingTickets())
   } catch {
@@ -31,18 +37,22 @@ export const startSeach = () => async dispatch => {
   }
 }
 
-const setSearchId = payload => ({
+const setSearchId = (payload: string): AnyAction => ({
   type: SET_SEARCH_ID,
   payload
 })
 
-const startFechingTickets = () => async dispatch => {
+const startFechingTickets = () => async (
+  dispatch: ThunkDispatch<RootStore, undefined, AnyAction>
+) => {
   const {
-    tickets: { searchId }
+    ticket: { searchId }
   } = store.getState()
   dispatch(startFetching())
   try {
-    const { tickets, stop } = await getTickets(searchId)
+    const {
+      data: { tickets, stop }
+    } = await getTickets(searchId)
     dispatch(saveTickets(tickets))
     stop ? dispatch(successFetching()) : dispatch(startFechingTickets())
   } catch {
@@ -51,7 +61,7 @@ const startFechingTickets = () => async dispatch => {
   }
 }
 
-const saveTickets = payload => ({
+const saveTickets = (payload: Ticket[]): AnyAction => ({
   type: SAVE_TICKETS,
   payload
 })

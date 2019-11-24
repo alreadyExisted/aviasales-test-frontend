@@ -1,4 +1,5 @@
-export const filterTickets = (stops, sorting, tickets) => {
+import { Ticket } from 'store'
+export const filterTickets = (stops: number[], sorting: string, tickets: Ticket[]):Ticket[] => {
   const filteredTickets = tickets.filter(
     ticket =>
       stops.indexOf(ticket.segments[0].stops.length) !== -1 &&

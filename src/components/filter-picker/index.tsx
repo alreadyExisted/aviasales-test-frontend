@@ -3,9 +3,11 @@ import styles from './styles.module.css'
 import { avaibleFilters } from 'utils/constants'
 import { createFilter } from 'utils/helpers'
 import { useSelector, useDispatch } from 'react-redux'
+import { RootStore } from 'store'
+
 
 export const FilterPicker = () => {
-  const stops = useSelector(state => state.filters.stops)
+  const stops = useSelector((state: RootStore)  => state.filter.stops)
   const dispatch = useDispatch()
   const [filters, setFilters] = useState(stops)
   const setStops = useCallback(
@@ -15,7 +17,7 @@ export const FilterPicker = () => {
   useEffect(() => {
     setStops()
   }, [setStops])
-  const handleChange = async value => {
+  const handleChange = async (value: number | string) => {
     setFilters(createFilter(filters, value))
   }
 
